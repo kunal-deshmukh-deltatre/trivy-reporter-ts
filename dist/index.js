@@ -66,7 +66,7 @@ function run() {
             };
             const response = yield (0, node_fetch_1.default)(endpointUrl, {
                 method: 'post',
-                body: input,
+                body: JSON.stringify(input),
                 headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
             });
             core.setOutput('output', response.body);

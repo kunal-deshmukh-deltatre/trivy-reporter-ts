@@ -26,7 +26,7 @@ async function run(): Promise<void> {
     }
     const response = await fetch(endpointUrl, {
       method: 'post',
-      body: input,
+      body: JSON.stringify(input),
       headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
     });
     core.setOutput('output', response.body)
