@@ -37,12 +37,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
+const http = __importStar(__nccwpck_require__(255));
 const fs = __importStar(__nccwpck_require__(747));
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const ms = core.getInput('endpointUrl');
-            core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+            const endpointUrl = core.getInput('endpointUrl');
+            const apiKey = core.getInput('apiKey');
+            core.debug(`Waiting ${endpointUrl} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
             let files = yield exec.exec('ls');
             const content = yield fs.readFileSync('trivy_results.json', { encoding: 'utf-8' });
             const GIT_BRANCH = process.env.GITHUB_REF_NAME;
@@ -50,7 +53,7 @@ function run() {
             // const PROJECT_NAME = tl.getVariable("System.TeamProject");
             const GIT_REPOSITORY_URI = process.env.GITHUB_REPOSITORY;
             // const PROJECT_ID = tl.getVariable("System.TeamProjectId");
-            const GIT_REPO_NAME = process.env.GITHUB_REPOSITORY;
+            const GIT_REPO_NAME = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')[1];
             const input = {
                 gitBranch: GIT_BRANCH,
                 gitCommitID: GIT_COMMIT_ID,
@@ -59,6 +62,8 @@ function run() {
                 vulnerabilitiesFile: JSON.parse(content)
             };
             console.log(JSON.stringify(input));
+            const https = new http.HttpClient();
+            yield https.post(endpointUrl, input, { 'x-functions-key': apiKey });
             core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
