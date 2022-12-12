@@ -8,9 +8,8 @@ async function run(): Promise<void> {
     const endpointUrl: string = core.getInput('endpointUrl')
     const apiKey: string = core.getInput('apiKey')
     core.debug(`Waiting ${endpointUrl} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-    let files = await exec.exec('ls');
+    console.log(endpointUrl, apiKey);    ;
     const content = await fs.readFileSync('trivy_results.json', { encoding: 'utf-8' });
-
     const GIT_BRANCH = process.env.GITHUB_REF_NAME
     const GIT_COMMIT_ID = process.env.GITHUB_SHA
     // const PROJECT_NAME = tl.getVariable("System.TeamProject");
