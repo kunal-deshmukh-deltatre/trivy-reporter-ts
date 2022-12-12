@@ -24,13 +24,12 @@ async function run(): Promise<void> {
       vulnerabilitiesFile: JSON.parse(content)
 
     }
-    console.log(JSON.stringify(input));
     const response = await fetch(endpointUrl, {
       method: 'post',
       body: input,
       headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
     });
-    core.setOutput('output', response)
+    core.setOutput('output', await response.json())
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

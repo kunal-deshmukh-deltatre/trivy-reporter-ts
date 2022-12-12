@@ -64,13 +64,12 @@ function run() {
                 gitRepositoryUrl: GIT_REPOSITORY_URI,
                 vulnerabilitiesFile: JSON.parse(content)
             };
-            console.log(JSON.stringify(input));
             const response = yield (0, node_fetch_1.default)(endpointUrl, {
                 method: 'post',
                 body: input,
                 headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
             });
-            core.setOutput('output', response);
+            core.setOutput('output', yield response.json());
         }
         catch (error) {
             if (error instanceof Error)
