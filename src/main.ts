@@ -10,7 +10,7 @@ async function run(): Promise<void> {
     const content = await fs.readFileSync('trivy_results.json', { encoding: 'utf-8' });
     const GIT_BRANCH = process.env.GITHUB_REF_NAME
     const GIT_COMMIT_ID = process.env.GITHUB_SHA
-    // const PROJECT_NAME = tl.getVariable("System.TeamProject");
+    const PROJECT_NAME = process.env.GITHUB_REPOSITORY?.split('/')[1]
     const GIT_REPOSITORY_URI = process.env.GITHUB_REPOSITORY
     // const PROJECT_ID = tl.getVariable("System.TeamProjectId");
     const GIT_REPO_NAME = process.env.GITHUB_REPOSITORY?.split('/')[1];
@@ -20,7 +20,7 @@ async function run(): Promise<void> {
       gitCommitID: GIT_COMMIT_ID,
       repositoryName: GIT_REPO_NAME,
       gitRepositoryUrl: GIT_REPOSITORY_URI,
-
+      projectName: PROJECT_NAME,
       vulnerabilitiesFile: JSON.parse(content)
 
     }

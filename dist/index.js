@@ -42,7 +42,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const node_fetch_1 = __importDefault(__nccwpck_require__(6882));
 const fs = __importStar(__nccwpck_require__(5747));
 function run() {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const endpointUrl = core.getInput('endpointUrl');
@@ -53,15 +53,16 @@ function run() {
             const content = yield fs.readFileSync('trivy_results.json', { encoding: 'utf-8' });
             const GIT_BRANCH = process.env.GITHUB_REF_NAME;
             const GIT_COMMIT_ID = process.env.GITHUB_SHA;
-            // const PROJECT_NAME = tl.getVariable("System.TeamProject");
+            const PROJECT_NAME = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')[1];
             const GIT_REPOSITORY_URI = process.env.GITHUB_REPOSITORY;
             // const PROJECT_ID = tl.getVariable("System.TeamProjectId");
-            const GIT_REPO_NAME = (_a = process.env.GITHUB_REPOSITORY) === null || _a === void 0 ? void 0 : _a.split('/')[1];
+            const GIT_REPO_NAME = (_b = process.env.GITHUB_REPOSITORY) === null || _b === void 0 ? void 0 : _b.split('/')[1];
             const input = {
                 gitBranch: GIT_BRANCH,
                 gitCommitID: GIT_COMMIT_ID,
                 repositoryName: GIT_REPO_NAME,
                 gitRepositoryUrl: GIT_REPOSITORY_URI,
+                projectName: PROJECT_NAME,
                 vulnerabilitiesFile: JSON.parse(content)
             };
             const response = yield (0, node_fetch_1.default)(endpointUrl, {
