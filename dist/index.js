@@ -38,13 +38,15 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const exec = __importStar(__nccwpck_require__(514));
 const wait_1 = __nccwpck_require__(817);
+const fs = __importStar(__nccwpck_require__(747));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const ms = core.getInput('milliseconds');
             core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
             let files = yield exec.exec('ls');
-            core.debug(new Date().toTimeString());
+            const content = yield fs.readFileSync('trivy_results.json', 'utf-8');
+            core.debug(content);
             yield (0, wait_1.wait)(parseInt(ms, 10));
             core.debug(new Date().toTimeString());
             core.setOutput('time', new Date().toTimeString());
