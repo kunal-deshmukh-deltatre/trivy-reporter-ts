@@ -1,10 +1,14 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Deltatre'
+description: 'Trivy Code Scanning'
+author: 'Deltatre'
 inputs:
-  milliseconds: # change this
+  endpointUrl: # change this
     required: true
-    description: 'input description here'
+    description: 'Endpoint to publish'
+    default: 'default value if applicable'
+  apiKey: # change this
+    required: true
+    description: 'Endpoint api key'
     default: 'default value if applicable'
 runs:
   using: 'node16'

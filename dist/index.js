@@ -63,8 +63,8 @@ function run() {
             };
             console.log(JSON.stringify(input));
             const https = new http.HttpClient();
-            yield https.post(endpointUrl, input, { 'x-functions-key': apiKey });
-            core.setOutput('time', new Date().toTimeString());
+            const ouput = yield https.post(endpointUrl, input, { 'x-functions-key': apiKey });
+            core.setOutput('output', ouput);
         }
         catch (error) {
             if (error instanceof Error)
