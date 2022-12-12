@@ -45,8 +45,8 @@ function run() {
             const ms = core.getInput('milliseconds');
             core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
             let files = yield exec.exec('ls');
-            const content = yield fs.readFileSync('trivy_results.json', 'utf-8');
-            core.debug(content);
+            const content = yield fs.readFileSync('trivy_results.json', { encoding: 'utf-8' });
+            console.log(JSON.stringify(content));
             yield (0, wait_1.wait)(parseInt(ms, 10));
             core.debug(new Date().toTimeString());
             core.setOutput('time', new Date().toTimeString());
