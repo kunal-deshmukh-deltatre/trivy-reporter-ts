@@ -29,7 +29,7 @@ async function run(): Promise<void> {
       body: input,
       headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
     });
-    core.setOutput('output', await response.json())
+    core.setOutput('output', response.body)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

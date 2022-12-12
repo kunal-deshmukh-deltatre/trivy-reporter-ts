@@ -69,7 +69,7 @@ function run() {
                 body: input,
                 headers: { 'Content-Type': 'application/json', 'x-functions-key': apiKey }
             });
-            core.setOutput('output', yield response.json());
+            core.setOutput('output', response.body);
         }
         catch (error) {
             if (error instanceof Error)
